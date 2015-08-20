@@ -1,0 +1,12 @@
+{
+  "name": "polyglotexchange",
+  "description": "A web page for polyglots and language enthusiasts.",
+  "author": "Victor CT <victorct@hotmail.com>",
+  "dependencies": {
+    "socket.io": "*",
+    "express": "*",
+    "redis": "*"
+  },
+  "version": "0.0.1",
+  "engines": {"node": ">= 0.11.9"}
+}
