@@ -22,7 +22,7 @@ class Question(models.Model):
 
 class QuestionTag(models.Model):
 	tag = models.ForeignKey('tags.Tag')
-	questio = models.ForeignKey(Question)
+	question = models.ForeignKey(Question)
 
 
 class Answer(models.Model):

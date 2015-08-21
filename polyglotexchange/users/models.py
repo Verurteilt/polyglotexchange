@@ -9,6 +9,12 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out
 
 from .managers import UserManager
 
+class LanguageUser(models.Model):
+    language  = models.ForeignKey('languages.Language')
+    user = models.ForeignKey('users.User')
+
+class Country(models.Model):
+    country = models.CharField(max_length=100)
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100)
@@ -18,11 +24,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     birth = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-#    twitter = models.URLField(null=True, blank=True)
-#    country = models.ForeignKey(Country, null=True, blank=True)
-#    language = models.ForeignKey('Language', null=True, blank=True)
+    age = models.IntegerField()
+    country = models.ForeignKey(Country, null=True, blank=True)
     activation_code = models.CharField(max_length=150)
     date_joined = models.DateTimeField(auto_now_add=True)
+    mother_tongue = models.ForeignKey('languages.Language')
+    languages_learning = models.ManyToManyField('languages.Language', through='LanguageUser')
 
 
     def save(self, *args, **kwargs):
@@ -81,10 +88,3 @@ def logout_user(sender, request, user, **kwargs):
 
 user_logged_in.connect(login_user)
 user_logged_out.connect(logout_user)
-
-"""class Language(models.Model):
-	language = models.CharField(max_length=100, unique=True, db_index=True)
-
-
-	def __unicode__(self):
-		return self.language"""
