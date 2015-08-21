@@ -11,6 +11,7 @@ from .managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True, db_index=True)
@@ -31,8 +32,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 
     def get_full_name(self):
         return _(self.first_name) + ' ' + _(self.last_name)
@@ -41,7 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return _(self.first_name)
 
     def __unicode__(self):
-        return _(self.first_name) + ' ' + _(self.last_name)
+        return _(self.username)
 
     def has_perm(self, perm, obj=None):
         if self.is_active and self.is_superuser:

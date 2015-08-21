@@ -23,6 +23,12 @@ DATABASES = {
         'PASSWORD': 'root',
         'HOST': '',
         'PORT': '',
+    },
+    'mongodb': {
+        'ENGINE': 'django_mongodb_engine',
+        'NAME': 'polyglotexchange',
+        "USER": 'root',
+        "PASSWORD": 'root'
     }
 }
 
@@ -48,7 +54,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'chat'
+    'chat',
+    'tags',
+    'qa'
 
 )
 

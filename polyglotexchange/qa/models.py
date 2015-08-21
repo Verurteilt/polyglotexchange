@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Fav(models.Model):
-	question = models.ForeignKey(Question)
+	question = models.ForeignKey('Question')
 	user = models.ForeignKey('users.User')
 
 
@@ -16,7 +16,13 @@ class Question(models.Model):
 	downvotes = models.IntegerField()
 	created = models.DateTimeField(auto_now_add=True)
 	last_edited = models.DateTimeField(auto_now_add=True)
+	tags = models.ManyToManyField('tags.Tag', through = 'QuestionTag')
+	comments = models.ManyToManyField(Comment, through = "QuestionComment")
 
+
+class QuestionTag(models.Model):
+	tag = models.ForeignKey('tags.Tag')
+	questio = models.ForeignKey(Question)
 
 
 class Answer(models.Model):
@@ -26,3 +32,18 @@ class Answer(models.Model):
 	accepted = models.BooleanField(default=False)
 	created = models.DateTimeField(auto_now_add=True)
 	last_edited = models.DateTimeField(auto_now_add=True)
+	comments = models.ManyToManyField(Comment, through = "AnswerComment")
+
+
+class Comment(models.Model):
+	owner = models.ForeignKey('users.User')
+	comentario = models.TextField()
+	created = models.DateTimeField(auto_now_add=True)
+
+class AnswerComment(models.Model):
+	comment = models.ForeignKey('Comment')
+	answer = models.ForeignKey('Answer')
+
+class QuestionComment(models.Model):
+	comment = models.ForeignKey('Comment')
+	answer = models.ForeignKey('Question')
