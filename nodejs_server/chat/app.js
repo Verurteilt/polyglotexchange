@@ -27,7 +27,7 @@ client_redis_grupos.on('message', function(channel, message){
 	obtener_usuarios_chat_grupo("chat:"+message_chat_id, function(err,miembros){
 		miembros.forEach(function(user_id){
 			pub.hgetall(user_id, function(error,usuario){
-				io.to(usuario['socket_id']).emit("message", {"from":"SERVER GROUPS", "message": "HOLALALALA"});
+				io.to(usuario['socket_id']).emit("message", {"from":message.user_id, "message": message.message});
 			});
 
 		});
