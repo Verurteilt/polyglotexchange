@@ -1,5 +1,5 @@
 from django.db import models
-
+from qa.managers import QuestionManager
 # Create your models here.
 
 class Fav(models.Model):
@@ -17,8 +17,9 @@ class Question(models.Model):
 	created = models.DateTimeField(auto_now_add=True)
 	last_edited = models.DateTimeField(auto_now_add=True)
 	tags = models.ManyToManyField('tags.Tag', through = 'QuestionTag')
-	comments = models.ManyToManyField(Comment, through = "QuestionComment")
+	comments = models.ManyToManyField("Comment", through = "QuestionComment")
 
+	objects = QuestionManager()
 
 class QuestionTag(models.Model):
 	tag = models.ForeignKey('tags.Tag')
@@ -32,7 +33,7 @@ class Answer(models.Model):
 	accepted = models.BooleanField(default=False)
 	created = models.DateTimeField(auto_now_add=True)
 	last_edited = models.DateTimeField(auto_now_add=True)
-	comments = models.ManyToManyField(Comment, through = "AnswerComment")
+	comments = models.ManyToManyField("Comment", through = "AnswerComment")
 
 
 class Comment(models.Model):

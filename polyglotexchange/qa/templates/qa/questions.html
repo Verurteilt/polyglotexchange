@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{%block breadcrumb %} Home > Discussions {% endblock %}
+{%block content %}
+<div class="breadcrumbs"></div>
+	<div class="columnaIzquierda">
+		{% if order_by == "normal" %}
+			{% for q in questions.rc %}	
+				<h2>Recent</h2>
+				<div class="containerPost">
+					<div class="fotoPost"></div>
+					<div class="detallePost clearfix">
+						<div class="textoPost">
+							<p class="resumenPost"><a href="{% url 'qa-single-question' q.id %}">Welcome to language forum please feel free to post any idea</a></p>
+							<p class="infoPost">Most recent by <b>John Donald</b></p>
+							<p class="fechaPost">Agosto 23</p>
+						</div>
+						<div class="calificacionPost cleafix">
+							<span class="viewsPost">577</span>
+							<span class="pointsPost">6</span>
+						</div>
+						<div class="tagPost clearfix"><span>Technology</span><span>Documents</span><span>Ideas</span></div>	
+					</div>
+				</div>
+			{% endfor %}
+			<div class="masComentarios"><a href="{% url 'qa-questions' 1 %}?ob=popular">More popular questions</a></div>
+			{% for q in questions.pq %}
+				<h2>Popular</h2>
+				<div class="containerPost">
+					<div class="fotoPost"></div>
+					<div class="detallePost clearfix">
+						<div class="textoPost">
+							<p class="resumenPost"><a href="{% url 'qa-single-question' q.id %}">Welcome to language forum please feel free to post any idea</a></p>
+							<p class="infoPost">Most recent by <b>John Donald</b></p>
+							<p class="fechaPost">Agosto 23</p>
+							<p class="tituloPost">General</p>
+						</div>
+						<div class="calificacionPost cleafix">
+							<span class="viewsPost">577</span>
+							<span class="pointsPost">6</span>
+						</div>
+							<div class="tagPost clearfix"><span>Technology</span><span>Documents</span><span>Ideas</span></div>	
+					</div>
+				</div>
+			{% endfor %}
+			<div class="masComentarios"><a href="{% url 'qa-questions' 1 %}?ob=recent">More recent questions</a></div>
+				<h2>Unanswered</h2>
+
+			{% for q in questions.uq %}
+				<div class="containerPost">
+					<div class="fotoPost"></div>
+					<div class="detallePost clearfix">
+						<div class="textoPost">
+							<p class="resumenPost"><a href="{% url 'qa-single-question' q.id %}">Welcome to language forum please feel free to post any idea</a></p>
+							<p class="infoPost">Most recent by <b>John Donald</b></p>
+							<p class="fechaPost">Agosto 23</p>
+							<p class="tituloPost">General</p>
+						</div>
+						<div class="calificacionPost cleafix">
+							<span class="viewsPost">577</span>
+							<span class="pointsPost">6</span>
+						</div>
+						<div class="tagPost clearfix"><span>Technology</span><span>Documents</span><span>Ideas</span></div>	
+					</div>
+				</div>
+			{% endfor %}
+			<div class="masComentarios"><a href="{% url 'qa-questions' 1 %}?ob=unanswered">More unanswered questions</a></div>
+	{% else %}
+	<div class="breadcrumbs"></div>
+		<h1>{{order_by|capfirst}}</h1>
+		{% for q in questions%}
+			<div class="containerPost">
+				<div class="fotoPost"></div>
+				<div class="detallePost clearfix">
+					<div class="textoPost">
+						<p class="resumenPost"><a href="{% url 'qa-single-question' q.id %}">Welcome to language forum please feel free to post any idea</a></p>
+						<p class="infoPost">Most recent by <b>John Donald</b></p>
+						<p class="fechaPost">Agosto 23</p>
+						<p class="tituloPost">General</p>
+					</div>
+					<div class="calificacionPost cleafix">
+						<span class="viewsPost">577</span>
+						<span class="pointsPost">6</span>
+					</div>
+					<div class="tagPost clearfix"><span>Technology</span><span>Documents</span><span>Ideas</span></div>	
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+
+</div> 				 	
+{% endblock %}

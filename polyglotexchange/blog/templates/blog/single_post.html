@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{%block breadcrumb %} Home > Discussions {% endblock %}
+{%block content %}
+{% load markdown_deux_tags %}
+
+ 	<div class="columnaIzquierda">
+ 		<h1>Exchange modisms</h1>
+ 			<div class="detallePost detalleFull clearfix">
+	 			<div class="textoPost">
+ 					<p class="resumenBlog"><a href="{% url 'blog-single-post' post.slug %}">{{post.name}}</a></p>
+ 					<p class="infoPost">Most recent by <b>{{post.owner.get_full_name}}</b></p>
+ 					<p class="fechaPost">{{post.date_created}}</p>
+ 				</div>
+ 				<div class="tagPost clearfix"><span>Technology</span><span>Documents</span><span>Ideas</span></div>	
+ 				<div class="questionContainer">
+ 					{{post.body|markdown}}
+					<img src="{{STATIC_URL}}img/TEDx-Roma.jpg">
+ 				</div>
+ 			</div>
+ 		<h2 class="comments">Comments</h2>
+ 		<div class="containerPosts spacerPost clearfix">
+ 			<div class="fotoBlog"></div>
+ 			<div class="answerPostContainer">
+ 		</div>
+ 		<div class="containerPosts spacerPost clearfix">
+ 			<div class="fotoBlog"></div>
+ 			<div class="detallePost detalleFull clearfix">
+ 				<div class="textoBlog">
+ 					<p class="infoPost"><b>Borna</b></p>
+ 					<p class="fechaPost">Agosto 23</p>
+ 				</div>
+ 				<p>Thanks so much Luca, it was fantastic and I enjoyed very much.</p>
+ 				<a class="replay" href="#">Reply</a>
+ 			</div>
+ 		</div>
+		<div class="containerPosts spacerPost clearfix">
+ 			<div class="fotoBlog"></div>
+ 			<div class="detallePost detalleFull clearfix">
+ 				<div class="textoBlog">
+ 					<p class="infoPost"><b>Borna</b></p>
+ 					<p class="fechaPost">Agosto 23</p>
+ 				</div>
+ 				<p>Thanks so much Luca, it was fantastic and I enjoyed very much.</p>
+ 				<a class="replay" href="#">Reply</a>
+ 			</div>
+ 		</div>
+ 		<div class="containerPosts spacerPost clearfix">
+ 			<div class="fotoBlog"></div>
+ 			<div class="detallePost detalleFull clearfix">
+ 				<div class="textoBlog">
+ 					<p class="infoPost"><b>Borna</b></p>
+ 					<p class="fechaPost">Agosto 23</p>
+ 				</div>
+ 				<p>Thanks so much Luca, it was fantastic and I enjoyed very much.</p>
+ 				<a class="replay" href="#">Reply</a>
+ 			</div>
+ 		</div>
+ 		<div class="containerPosts spacerPost clearfix">
+ 			<div class="fotoBlog"></div>
+ 			<div class="detallePost detalleFull clearfix">
+ 				<div class="textoBlog">
+ 					<p class="infoPost"><b>Borna</b></p>
+ 					<p class="fechaPost">Agosto 23</p>
+ 				</div>
+ 				<p>TThanks so much Luca, it was fantastic and I enjoyed very much.</p>
+ 				<a class="replay" href="#">Reply</a>
+ 			</div>
+ 		</div>
+ 	</div> 				 	
+ </div>
+ {% endblock %}

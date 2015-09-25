@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{%block breadcrumb %} Home > Discussions {% endblock %}
+{%block content %}
+{% load markdown_deux_tags %}
+
+<div class="breadcrumbs"></div>
+ 	<div class="columnaIzquierda">
+ 		<h1>Latest entrances</h1>
+ 		{% for post in posts %}
+	 		<div class="containerBlog">
+	 			<img src="{{STATIC_URL}}img/example-150-150.jpg">
+	 			<p class="resumenBlog"><a href="{% url 'blog-single-post' post.slug %}">{{post.name}}</a></p>
+	 			<div class="infoBlog clearfix">
+	 				<p class="infoPost">Most recent by <b>{{post.owner.get_full_name}}</b></p>
+	 				<p class="fechaPost">{{post.date_created}}</p>
+	 			</div>
+	 			<div class="tagBlog clearfix"><span>Technology</span><span>Documents</span><span>Ideas</span></div>	
+	 			<div class="blogContainer">
+	 				<p>{{post.body|markdown|truncatechars:100}}</p>
+	 			</div>
+	 		</div>
+ 		{% endfor %}
+ 	</div> 				 	
+ {% endblock %}

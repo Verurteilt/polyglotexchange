@@ -1,65 +1,83 @@
+'use strict';
+
 var UserBox = React.createClass({
+	displayName: 'UserBox',
 
-	getUsersConnected: function(){
+	getUsersConnected: function getUsersConnected() {
 		$.ajax({
-			url: '/chat/users_connected/',
-		})
-		.done(function(data) {
-			this.setState({users_connected:data});
-		}.bind(this));
+			url: '/chat/users_connected/'
+		}).done((function (data) {
+			this.setState({ users_connected: data });
+		}).bind(this));
 	},
 
-	getInitialState: function(){
-		return {users_connected: []}
+	getInitialState: function getInitialState() {
+		return { users_connected: [] };
 	},
 
-	componentDidMount: function(){
+	componentDidMount: function componentDidMount() {
 		this.getUsersConnected();
 		socket.on('user_connected', this.getUsersConnected);
+		socket.on('user_disconnected', this.getUsersConnected);
 	},
-	
-	render: function(){
-		return (
-				<div>
-					<UserList users={this.state.users_connected} />
-				</div>
+
+	render: function render() {
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'div',
+				{ className: 'chatTitle' },
+				'Chat area'
+			),
+			React.createElement(
+				'div',
+				{ className: 'chatPersona' },
+				React.createElement(UserList, { onClickUser: this.props.onClickUser, users: this.state.users_connected })
 			)
+		);
 	}
 });
-
-
 
 var UserList = React.createClass({
-	render: function(){
-		var users = this.props.users.map(function(user){
-			return (
-				<User user_id={user.user_id}>
-					{user.username}
-				</User>
-				)
+	displayName: 'UserList',
+
+	render: function render() {
+		var onClickUser = this.props.onClickUser;
+		var users = this.props.users.map(function (user) {
+			return React.createElement(
+				User,
+				{ onClickUser: onClickUser, user_id: user.user_id, languages: user.languages, gender: user.gender },
+				user.username
+			);
 		});
 
-		return (
-				<div class="userList">
-					{users}
-				</div>
-			)
+		return React.createElement(
+			'ul',
+			null,
+			users
+		);
 	}
 });
-
 
 var User = React.createClass({
-	render: function(){
-		return (
-				<div class="user" data-userid={this.props.user_id}>
-					{this.props.children}
-				</div>
+	displayName: 'User',
+
+	render: function render() {
+		var className = "user " + this.props.gender;
+		return React.createElement(
+			'li',
+			{ onClick: this.props.onClickUser.bind(this, this.props.user_id, this.props.children) },
+			React.createElement(
+				'span',
+				{ className: className },
+				this.props.children
+			),
+			React.createElement(
+				'span',
+				null,
+				this.props.languages
 			)
+		);
 	}
 });
-
-
-React.render(
-	<UserBox />,
-	document.getElementById('content')
-);

@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.conf import global_settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+DBMONGO = 'polyglotexchange'
 
 DATABASES = {
     'default': {
@@ -27,8 +30,8 @@ DATABASES = {
     'mongodb': {
         'ENGINE': 'django_mongodb_engine',
         'NAME': 'polyglotexchange',
-        "USER": 'root',
-        "PASSWORD": 'root'
+        #"USER": 'root',
+        #"PASSWORD": 'root'
     }
 }
 
@@ -37,6 +40,9 @@ DATABASES = {
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'gxws_!hpi738&f&6-yk4o_b*0f&45kvg&ekp=#r^y9y^$6fml-'
+
+#DATABASE_ROUTERS = ['chat.mongo_router.MongoRouter']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -53,10 +59,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'markdown_deux',
     'users',
     'chat',
     'tags',
-    'qa'
+    'qa',
+    'languages',
+    'blog',
+    'pagedown',
+    'base'
 
 )
 
@@ -84,7 +95,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.static'
+                'django.core.context_processors.static',
+                'users.context_processors.users_logged_in',
+                'users.context_processors.logged_user_id'
             ],
         },
     },
@@ -116,6 +129,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 ## CUSTOM USER ####
 AUTH_USER_MODEL = "users.User"
+
+# Media files
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
