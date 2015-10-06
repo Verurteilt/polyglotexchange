@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from chat.views import home, login
+from chat.views import home
+from users.views import login_view, auth, auth_pusher
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
 	url(r'^$', home, name='home'),
-	url(r'^login/', login, name='login'),
+	url(r'^login/', login_view, name='login'),
+    url(r'^auth/', auth, name='auth'),
+    url(r'^auth_pusher/', auth_pusher, name='auth_pusher'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^chat/', include('chat.urls')),
     url(r'^qa/', include('qa.urls')),

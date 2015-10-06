@@ -150,3 +150,37 @@ def twilio2(request):
     sid= "AC507aca07d8d4bef701c42c11388de1d3"
     client_name="sebastian"
     return render(request, 'chat/twilio2.html', locals())
+
+
+
+
+
+
+from chat import pusher_server
+
+def insert_message_notify_pusher(request):
+    #r = redis.StrictRedis(host='localhost', port=6379, db=0)
+    to_user = request.GET['to']
+    from_user = request.GET['from']
+    message = request.GET['message']
+    pusher_server.trigger('messages', 'new_message', {
+        'message': text,
+        'to': to_user,
+        'from': from_user
+    })  
+    #message_redis = {'message': message, 'user_id': from_user_id, 'to': to_user_id, 'chat_id': to_user_id}
+    """if not str(to_user_id).isalpha():
+        r.publish('chat',json.dumps(message_redis))
+        try:
+            transaction.set_autocommit(True)
+            m = MessageChat.objects.create(message=message, from_user=from_user_id, to_user=to_user_id, created_at=datetime.now())
+        except:pass
+    else:
+        message_redis['username']  = User.objects.get(pk=from_user_id).username
+        r.publish('chat_groups',json.dumps(message_redis))
+        try:
+            transaction.set_autocommit(True)
+            m = MessageChat.objects.create(message=message, from_user=from_user_id, to_group=to_user_id, created_at=datetime.now())
+        except Exception as e:
+            print e #:pass"""
+    return HttpResponse("Everything worked :)")

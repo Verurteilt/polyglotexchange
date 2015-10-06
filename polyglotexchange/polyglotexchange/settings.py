@@ -84,6 +84,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'polyglotexchange.urls'
 
+AUTHENTICATION_BACKENDS = ('users.backend.UsernameBackend', )
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -141,3 +144,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+LOGIN_URL = '/login/'

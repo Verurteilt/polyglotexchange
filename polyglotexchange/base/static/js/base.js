@@ -36,4 +36,5 @@
   $(window).load(function() {
   	$.ajax({url:"/chat/load/"});
   });
+
 })(jQuery);

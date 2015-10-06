@@ -202,9 +202,8 @@ var ChatBox = React.createClass({
 		if (this.state.is_chat_group == false) {
 			var messages = this.getLastMessages(this.state.user_id, this.state.to_id);
 		} else {
-			var messages = this.getLastMessagesGroup(this.state.user_id, this.state.to_id);
+			var messages = this.getLastMessagesGroup(this.state.to_id);
 		}
-
 		var messages_tmp = [];
 		var lm_tmp = "";
 		for (var message in messages) {

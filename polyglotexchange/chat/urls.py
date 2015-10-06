@@ -11,6 +11,7 @@ urlpatterns = patterns('chat.views',
     url(r'^users_connected/$', 'users_connected', name='users_connected'),
     url(r'^groups_available/$', 'groups_available', name='groups_available'),
     url(r'^insert_message_notify_nodejs/$', 'insert_message_notify_nodejs', name='insert_message_notify_nodejs'),
+    url(r'^insert_message_notify_pusher/$', 'insert_message_notify_pusher', name='insert_message_notify_pusher'),
     url(r'^get_last_messages/$', 'get_last_messages', name='get_last_messages'),
     url(r'^get_last_messages_group/$', 'get_last_messages_group', name='get_last_messages_group'),
 
