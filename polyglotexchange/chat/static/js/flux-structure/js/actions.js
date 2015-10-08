@@ -12,17 +12,41 @@ var ChatActions = {
 			to: to
 		});
 	},
+	getLastMessages: function(from, to){
+		ChatDispatcher.dispatch({
+			actionType: Constants.GET_MESSAGES,
+			from: from,
+			to: to
+		});
+	},
+	getLastMessagesGroup: function(from, to){
+		console.log("ENTREE WEE");
+		ChatDispatcher.dispatch({
+			actionType: Constants.GET_MESSAGES,
+			from: from,
+			to: to
+		});
+	}
 }
 
 
 var ContainerActions = {
-	addChat	: function(from, to){
+	addChat	: function(from, to, chatbox){
 		ContainerDispatcher.dispatch({
 			actionType: Constants.CHAT_APPENDED,
 			from: from,
-			to: to
+			to_user: to,
+			chatbox: chatbox
 		});
-	},	
+	},
+
+	updateOwner: function(username){
+		ContainerDispatcher.dispatch({
+			actionType: Constants.UPDATE_OWNER,
+			username: username
+		});
+
+	}
 }
 
 var UserBoxActions = {
@@ -43,13 +67,21 @@ var UserBoxActions = {
 		ContainerDispatcher.dispatch({
 			actionType: Constants.REMOVE_USER,
 			member: member
-		})
+		});
 	}
 }
 
+var GroupBoxActions = {
+	getGroupsAvailable: function(){
+		ContainerDispatcher.dispatch({
+			actionType: Constants.GET_GROUPS_AVAILABLE,
+		});
+	}
+};
 
 module.exports.ChatActions = ChatActions;
 module.exports.ChatDispatcher = ChatDispatcher;
 module.exports.ContainerActions = ContainerActions;
 module.exports.ContainerDispatcher = ContainerDispatcher;
 module.exports.UserBoxActions = UserBoxActions;
+module.exports.GroupBoxActions = GroupBoxActions;

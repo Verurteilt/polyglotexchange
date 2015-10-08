@@ -43,7 +43,15 @@
 	var pusher_client = new Pusher('8dbac17c6e4e20f8d478', {
 	    authEndpoint: 'http://localhost:8000/auth_pusher/'
 	});
+	var socket_id = null;
+
+	pusher_client.connection.bind('connected', function(){
+		socket_id = pusher_client.connection.socket_id;
+	});
 	var chat_channel = pusher_client.subscribe('presence-chat');
+	
+
+
 
 </script>
 <script src="{{STATIC_URL}}js/flux-structure/js/bundle.js"></script>

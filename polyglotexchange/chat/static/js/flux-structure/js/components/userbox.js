@@ -13,7 +13,7 @@ var UserBox = React.createClass({
 		UsersConnectedStore.addChangeListener(this._onChange);
 	},
 	_onChange: function(){
-        this.setState(UsersConnectedStore.getState())
+        this.setState(UsersConnectedStore.getState());
     },
     componentWillUnmount: function(){
         UsersConnectedStore.removeChangeListener(this._onChange);
@@ -24,7 +24,7 @@ var UserBox = React.createClass({
 				<div>
 					<div className="chatTitle">Chat area</div>
 					<div className="chatPersona">
-						<UserList users={users} />
+						<UserList users={this.state.users_connected} />
 					</div>
 				</div>
 			)

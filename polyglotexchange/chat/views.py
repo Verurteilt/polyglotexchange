@@ -35,7 +35,7 @@ def load(request):
         pass
     return HttpResponse("")
 
-@login_required
+"""@login_required
 def get_last_messages(request):
     from_id = request.GET.get('from')
     to = request.GET.get('to')
@@ -48,9 +48,19 @@ def get_last_messages(request):
         if m.from_user == str(from_id):
             username = usuario_from.username
         info.append({"from_id": m.from_user, "to_id": m.to_user, "message": m.message, "username":username})
-    return JsonResponse(info, safe=False)
+    return JsonResponse(info, safe=False)"""
 
 @login_required
+def get_last_messages(request):
+    from_username = request.GET.get('from')
+    to = request.GET.get('to')
+    messages = get_last_50_messages_users(from_username, to)
+    info = []
+    for m in messages:
+        info.append({"from": m.from_user, "to": m.to_user, "message": m.message})
+    return JsonResponse(info, safe=False)
+
+"""@login_required
 def get_last_messages_group(request):
     group_id = request.GET.get('group_id')
     #to = request.GET.get('to')
@@ -61,8 +71,16 @@ def get_last_messages_group(request):
     for m in messages:
         username = User.objects.get(pk=m.from_user).username
         info.append({"from_id": m.from_user, "to_id": m.to_group, "message": m.message, "username":username})
-    return JsonResponse(info, safe=False)
+    return JsonResponse(info, safe=False)"""
 
+@login_required
+def get_last_messages_group(request):
+    group = request.GET.get('group')
+    messages = get_last_50_messages_group(group)
+    info = []
+    for m in messages:
+        info.append({"from": m.from_user, "to": m.to_group, "message": m.message})
+    return JsonResponse(info, safe=False)
 
 
 def insert_message_notify_nodejs(request):
