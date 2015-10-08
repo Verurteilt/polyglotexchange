@@ -26,53 +26,53 @@ var _state_chat = {
 
 var getOwner = function(){
     if(_state_container['owner']){
-        return _state_container['owner'];    
-    };
+        return _state_container['owner'];
+    }
     return $('#user_data').html();
 
     
-}
+};
 
 var updateOwner = function(username){
     _state_container['owner'] = username;
-}
+};
 
 var sendMessage = function(message, from, to){
 	$.ajax({
 			url: '/chat/insert_message_notify_pusher/',
 			data: {'from': from, 'to': to, "message": message}
 	});
-}
+};
 
 var addChat = function(from, to, chatbox){
     var chat_name = from + '-' + to;
-    if(_state_container.chatBoxes[chat_name] == undefined){
+    if(_state_container.chatBoxes[chat_name] === undefined){
         _state_container.chatBoxes[chat_name] = chatbox;
         _state_container.talkingTo.push(to);
         ChatGroupStore.emitChange();
     }
-}
+};
 
 var addUserConnected = function(member){
     _state_userscontainer['users_connected'][member.id] = {'username': member.info.username, 'info': member.info};
     UsersConnectedStore.emitChange();
 
-}
+};
 
 var removeUser = function(member){
     delete _state_userscontainer['users_connected'][member.id];
     UsersConnectedStore.emitChange();
-}
+};
 
 var getUsersConnected = function(){
     if(chat_channel.members.me){
-        _state_userscontainer['me'][chat_channel.members.me.id] = {'username': chat_channel.members.me.info.username, 'info': chat_channel.members.me.info}
+        _state_userscontainer['me'][chat_channel.members.me.id] = {'username': chat_channel.members.me.info.username, 'info': chat_channel.members.me.info};
         chat_channel.members.each(function(member) {
             if(member.id != chat_channel.members.me.id){
                 _state_userscontainer['users_connected'][member.id] = {'username': member.info.username, 'info': member.info};
             }
         });
-        UsersConnectedStore.emitChange()
+        UsersConnectedStore.emitChange();
     }
 };
 
@@ -90,10 +90,10 @@ var getGroupsAvailable = function(){
 var getMessages = function(from, to){
     $.ajax({
         url: '/chat/get_last_messages/',
-        data: {'from': from, 'to': to},            
+        data: {'from': from, 'to': to},
     })
-    .done(function(data) {
-        data = JSON.parse(data);
+    .done(function(data){
+        
         var last_sender = null;
         if(data.length > 0){
             last_sender = data[data.length-1].from;
@@ -102,16 +102,15 @@ var getMessages = function(from, to){
         _state_chat[from+'-'+to]['last_sender'] = last_sender;
         ChatStore.emitChange();
     });
-}
+};
 
 var getMessagesGroup = function(from, to){
         console.log("YEES");
         $.ajax({
             url: '/chat/get_last_messages_group/',
-            data: {'group_id': to},            
+            data: {'group_id': to},
         })
         .done(function(data) {
-            data = JSON.parse(data);
             var last_sender = null;
             if(data.length > 0){
                 last_sender = data[data.length-1].from;
@@ -120,7 +119,7 @@ var getMessagesGroup = function(from, to){
             _state_chat[from+'-'+to]['last_sender'] = last_sender;
             ChatStore.emitChange();
         });
-}
+};
 
 var ChatGroupStore = $.extend({}, EventEmitter.prototype, {
     getState: function(from, to) {
@@ -139,14 +138,14 @@ var ChatGroupStore = $.extend({}, EventEmitter.prototype, {
 
 var ChatStore = $.extend({}, EventEmitter.prototype, {
     getState: function(from , to) {
-        if(from != undefined && to != undefined){
+        if(from !== undefined && to !== undefined){
             return _state_chat[from+'-'+to];
         }
-        return {};       
+        return {};
     },
 
     setState: function(from, to){
-        if(from != undefined && to != undefined){
+        if(from !== undefined && to !== undefined){
             _state_chat[from+'-'+to] = {'messages': [], 'to': to, 'last_sender': null};
             return _state_chat[from+'-'+to];
         }
@@ -196,8 +195,7 @@ var GroupsStore = $.extend({}, EventEmitter.prototype, {
 
 
 
-ContainerDispatcher.register(function(action){   
-    console.log(action.actionType);
+ContainerDispatcher.register(function(action){
     if(action.actionType == Constants.USER_CONNECTED){
         addUserConnected(action.member);
     }else if(action.actionType == Constants.CHAT_APPENDED){
@@ -211,13 +209,11 @@ ContainerDispatcher.register(function(action){
     }else if(action.actionType == Constants.UPDATE_OWNER){
         updateOwner(action.username);
     }else if(action.actionType == Constants.GET_MESSAGES){
-        console.log("PASO POR AQUI??");
         getMessages(action.from, action.to);
     }else if(action.actionType == Constants.GET_MESSAGES_GROUP){
-        console.log("POR ACA IGUAL");
         getMessagesGroup(action.from, action.to);
     }
-
+    return true;
 });
 
 

@@ -18,18 +18,14 @@ var ChatBox = React.createClass({
 	componentDidMount: function(){
 		ChatStore.addChangeListener(this._onChange);
 		if(this.props.is_chat_group){
-			console.log("NO");
-			ContainerActions.addChat("s", "s",<ChatBox to={"s"} to_username={"ho"} is_chat_group={true}/>);
-			ChatActions.getLastMessages(owner, this.props.to);	
+			ChatActions.getLastMessages(owner, this.props.to);
 		}else{
-			console.log("SI");
-			ChatActions.getLastMessages(owner, this.props.to);	
+			ChatActions.getLastMessages(owner, this.props.to);
+			
 		}
 	},
 	_onChange: function(){
         this.setState(ChatStore.getState(owner, this.state.to));
-        console.log("WIII");
-        console.log(this.state);
     },
     componentWillUnmount: function(){
         ChatStore.removeChangeListener(this._onChange);

@@ -5,7 +5,7 @@ var ContainerDispatcher = new Dispatcher();
 
 var ChatActions = {
 	sendMessage: function(message, from, to){
-		ChatDispatcher.dispatch({
+		ContainerDispatcher.dispatch({
 			actionType: Constants.SEND_MESSAGE,
 			message: message,
 			from: from,
@@ -13,21 +13,20 @@ var ChatActions = {
 		});
 	},
 	getLastMessages: function(from, to){
-		ChatDispatcher.dispatch({
+		ContainerDispatcher.dispatch({
 			actionType: Constants.GET_MESSAGES,
 			from: from,
 			to: to
 		});
 	},
 	getLastMessagesGroup: function(from, to){
-		console.log("ENTREE WEE");
-		ChatDispatcher.dispatch({
+		ContainerDispatcher.dispatch({
 			actionType: Constants.GET_MESSAGES,
 			from: from,
 			to: to
 		});
 	}
-}
+};
 
 
 var ContainerActions = {
@@ -47,7 +46,7 @@ var ContainerActions = {
 		});
 
 	}
-}
+};
 
 var UserBoxActions = {
 	getUsersConnected: function(){
@@ -69,7 +68,7 @@ var UserBoxActions = {
 			member: member
 		});
 	}
-}
+};
 
 var GroupBoxActions = {
 	getGroupsAvailable: function(){
