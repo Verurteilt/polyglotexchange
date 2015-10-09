@@ -1,11 +1,11 @@
 var React = require('react');
 var stores = require('../stores');
 var actions = require('../actions');
+var MessageForm = require('./messageform');
+var MessagesList = require('./messageslist');
 var owner = stores.getOwner();
 var ChatActions = actions.ChatActions;
 var ContainerActions = actions.ContainerActions;
-
-
 var ChatStore = stores.ChatStore;
 
 var ChatBox = React.createClass({
@@ -18,7 +18,7 @@ var ChatBox = React.createClass({
 	componentDidMount: function(){
 		ChatStore.addChangeListener(this._onChange);
 		if(this.props.is_chat_group){
-			ChatActions.getLastMessages(owner, this.props.to);
+			ChatActions.getLastMessagesGroup(owner, this.props.to);
 		}else{
 			ChatActions.getLastMessages(owner, this.props.to);
 			
@@ -33,10 +33,14 @@ var ChatBox = React.createClass({
 
 	
 	render: function(){
+		console.log("WHHAAT");
+		console.log(this.state);
 		return (
 				<div className="chatContainer" from={owner} to={this.state.to} >
 					<div className="chatTitle">{this.props.to_username}<div className="closeChat"></div><div id="minimize" className="minimizeChat"></div></div>
 					<div className="chatConversationContainer">
+					<MessagesList to={this.state.to}/>
+					<MessageForm/>
 					</div>
 				</div>
             )

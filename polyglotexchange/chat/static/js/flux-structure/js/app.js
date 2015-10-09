@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var MainContainer = require('./components/container');
 var $ = require('jquery');
 var stores = require('./stores');

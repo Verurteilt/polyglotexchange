@@ -105,7 +105,6 @@ var getMessages = function(from, to){
 };
 
 var getMessagesGroup = function(from, to){
-        console.log("YEES");
         $.ajax({
             url: '/chat/get_last_messages_group/',
             data: {'group_id': to},
@@ -122,7 +121,7 @@ var getMessagesGroup = function(from, to){
 };
 
 var ChatGroupStore = $.extend({}, EventEmitter.prototype, {
-    getState: function(from, to) {
+    getState: function() {
             return _state_container;
     },
     emitChange: function() {

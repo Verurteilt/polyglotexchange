@@ -21,7 +21,7 @@ var ChatActions = {
 	},
 	getLastMessagesGroup: function(from, to){
 		ContainerDispatcher.dispatch({
-			actionType: Constants.GET_MESSAGES,
+			actionType: Constants.GET_MESSAGES_GROUP,
 			from: from,
 			to: to
 		});

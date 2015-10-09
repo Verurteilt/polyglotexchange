@@ -1,19 +1,29 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
+var stores = require('../stores');
+var MessagesUserContainer = require('./messageusercontainer');
+var Message = require('./message');
+var ChatStore = stores.ChatStore;
+var owner = stores.getOwner();
 
 var MessagesList = React.createClass({
+
+	getInitialState: function(){
+		return {'muc': []};
+	},
 	componentDidUpdate: function(){
-		var node = React.findDOMNode(this);
+		var node = ReactDOM.findDOMNode(this);
   		node.scrollTop = node.scrollHeight;
 	},
-	render: function(){
-		var owner = this.props.owner.toString();
+	muc: [],
+	orderMessages: function(){
 		var class_ = "";
 		var username = "";
-		var  messages = []
-		var last_message_sender = "";//this.props.last_message_sender;
 		var messages = []
 		var muc = [];
-		var men = this.props.messages;
+		var state_chat = ChatStore.getState(owner, this.props.to);
+		var men = state_chat['messages'];
+		var last_message_sender = state_chat['last_sender'];
 		var temp = []
 		
 		if (!!men.length) {
@@ -21,27 +31,27 @@ var MessagesList = React.createClass({
 			var tmp_msgs = [];
 			var tmp2 = [];
 			men.map(function(message){
-				if(message.from_id.toString() == owner){
+				if(message.from == owner){
 					class_ = "marcoChat chat2";
 					username = "You";
 				}else{
 					class_ = "marcoChat";
-					username = message.username;
+					username = message.from;
 				}
-				if(message.from_id.toString() == lm){//&& men.indexOf(message) != men.length-1){ // Es del mismo qu el anterior
+				if(message.from == lm){
 					tmp_msgs.push(<Message >{message.message}</Message>);
 					tmp2.push({"className": class_, "username": username});
-				}else if(message.from_id.toString() != lm){ // No es el mismo 
+				}else if(message.from != lm){
 					tmp_msgs = [];
 					tmp2 = [];
 					tmp_msgs.push(<Message >{message.message}</Message>);
 					tmp2.push({"className": class_, "username": username});
-					lm = message.from_id;
+					lm = message.from;
 				}
 				if(men.indexOf(message) == men.length-1){
 					messages.push(tmp_msgs);
 					temp.push(tmp2);
-				}else if((message.from_id.toString() != men[men.indexOf(message)+1].from_id.toString()) ){
+				}else if((message.from != men[men.indexOf(message)+1].from) ){
 					messages.push(tmp_msgs);
 					temp.push(tmp2);
 				}
@@ -55,9 +65,13 @@ var MessagesList = React.createClass({
 				muc.push(<MessagesUserContainer className={_class} username={username} messages_user={message}/>);
 			});
 		}
+		this.muc = muc;
+	},
+	render: function(){
+		this.orderMessages();
 		return (
-				<div className="chatScroll">
-					{muc}
+				<div className="chatScroll" ref="chatScroll">
+					{this.muc}
 				</div>
 			)
 	}

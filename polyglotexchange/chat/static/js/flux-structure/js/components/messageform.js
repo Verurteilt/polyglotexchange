@@ -7,7 +7,6 @@ var MessageForm = React.createClass({
 		if(!message){
 			return;
 		}
-		this.props.sendMessageNodeJS({message:message});
 		React.findDOMNode(this.refs.message).value = "";
 		return;
 	},
@@ -22,9 +21,6 @@ var MessageForm = React.createClass({
 			 		<input type="submit" value="Send" />
 		 		</div>
 		 	</form>
-			/*<form className="MessageForm" onSubmit={this.sendMessage}>
-				<input type="text" placeholder="Message" ref="message" />
-			</form>*/
 		)
 	}
 
