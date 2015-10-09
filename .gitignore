@@ -4,4 +4,6 @@ lib/
 include/
 build/
 share/
+polyglotexchange/chat/static/js/flux-structure/node_modules/
+*.pyc
 
