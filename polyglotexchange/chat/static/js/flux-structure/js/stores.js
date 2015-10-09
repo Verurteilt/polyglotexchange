@@ -37,10 +37,19 @@ var updateOwner = function(username){
     _state_container['owner'] = username;
 };
 
-var sendMessage = function(message, from, to){
+var addMessage = function(message, from, to){
+    _state_chat[from+'-'+to]['messages'].push({'message': message, 'from': from, 'to': to});
+    _state_chat[from+'-'+to]['last_sender'] = from;
+    ChatStore.emitChange();
+};
+
+var sendMessagePusher = function(message, from, to, is_chat_group){
 	$.ajax({
 			url: '/chat/insert_message_notify_pusher/',
-			data: {'from': from, 'to': to, "message": message}
+			data: {"from_user": from, 'to': to, "message": message, 'is_chat_group': is_chat_group},
+            success: function(){
+                addMessage(message, from, to);
+            }
 	});
 };
 
@@ -103,6 +112,9 @@ var getMessages = function(from, to){
         ChatStore.emitChange();
     });
 };
+
+
+
 
 var getMessagesGroup = function(from, to){
         $.ajax({
@@ -211,6 +223,8 @@ ContainerDispatcher.register(function(action){
         getMessages(action.from, action.to);
     }else if(action.actionType == Constants.GET_MESSAGES_GROUP){
         getMessagesGroup(action.from, action.to);
+    }else if(action.actionType == Constants.SEND_MESSAGE){
+        sendMessagePusher(action.message, action.from, action.to, action.is_chat_group);
     }
     return true;
 });

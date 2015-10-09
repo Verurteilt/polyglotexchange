@@ -9,7 +9,7 @@ var owner = stores.getOwner();
 var MessagesList = React.createClass({
 
 	getInitialState: function(){
-		return {'muc': []};
+		return {};
 	},
 	componentDidUpdate: function(){
 		var node = ReactDOM.findDOMNode(this);
@@ -39,12 +39,14 @@ var MessagesList = React.createClass({
 					username = message.from;
 				}
 				if(message.from == lm){
-					tmp_msgs.push(<Message >{message.message}</Message>);
+					var key = username + '-' + men.indexOf(message);
+					tmp_msgs.push(<Message key={key}>{message.message}</Message>);
 					tmp2.push({"className": class_, "username": username});
 				}else if(message.from != lm){
 					tmp_msgs = [];
 					tmp2 = [];
-					tmp_msgs.push(<Message >{message.message}</Message>);
+					var key = username + '-' + men.indexOf(message);
+					tmp_msgs.push(<Message key={key}>{message.message}</Message>);
 					tmp2.push({"className": class_, "username": username});
 					lm = message.from;
 				}
@@ -62,7 +64,8 @@ var MessagesList = React.createClass({
 				var index = messages.indexOf(message);
 				var _class = temp[index][0].className;
 				var username = temp[index][0].username;
-				muc.push(<MessagesUserContainer className={_class} username={username} messages_user={message}/>);
+				var key = username + '-' + message.length;
+				muc.push(<MessagesUserContainer key={key} className={_class} username={username} messages_user={message}/>);
 			});
 		}
 		this.muc = muc;
@@ -70,7 +73,7 @@ var MessagesList = React.createClass({
 	render: function(){
 		this.orderMessages();
 		return (
-				<div className="chatScroll" ref="chatScroll">
+				<div className="chatScroll" >
 					{this.muc}
 				</div>
 			)

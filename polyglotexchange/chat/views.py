@@ -178,14 +178,18 @@ from chat import pusher_server
 
 def insert_message_notify_pusher(request):
     #r = redis.StrictRedis(host='localhost', port=6379, db=0)
-    to_user = request.GET['to']
-    from_user = request.GET['from']
-    message = request.GET['message']
-    pusher_server.trigger('messages', 'new_message', {
-        'message': text,
-        'to': to_user,
-        'from': from_user
-    })  
+    try:
+        print(request.GET)
+        to_user = request.GET['to']
+        from_user = request.GET['from_user']
+        message = request.GET['message']
+        pusher_server.trigger('messages', 'new_message', {
+            'message': message,
+            'to': to_user,
+            'from': from_user
+        })  
+    except Exception as e:
+        print e
     #message_redis = {'message': message, 'user_id': from_user_id, 'to': to_user_id, 'chat_id': to_user_id}
     """if not str(to_user_id).isalpha():
         r.publish('chat',json.dumps(message_redis))

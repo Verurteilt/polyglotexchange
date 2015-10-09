@@ -4,12 +4,13 @@ var ChatDispatcher = new Dispatcher();
 var ContainerDispatcher = new Dispatcher();
 
 var ChatActions = {
-	sendMessage: function(message, from, to){
+	sendMessage: function(message, from, to, is_chat_group){
 		ContainerDispatcher.dispatch({
 			actionType: Constants.SEND_MESSAGE,
 			message: message,
 			from: from,
-			to: to
+			to: to,
+			is_chat_group: is_chat_group
 		});
 	},
 	getLastMessages: function(from, to){

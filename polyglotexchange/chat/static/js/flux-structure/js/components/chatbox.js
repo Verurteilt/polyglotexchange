@@ -33,14 +33,12 @@ var ChatBox = React.createClass({
 
 	
 	render: function(){
-		console.log("WHHAAT");
-		console.log(this.state);
 		return (
 				<div className="chatContainer" from={owner} to={this.state.to} >
 					<div className="chatTitle">{this.props.to_username}<div className="closeChat"></div><div id="minimize" className="minimizeChat"></div></div>
 					<div className="chatConversationContainer">
 					<MessagesList to={this.state.to}/>
-					<MessageForm/>
+					<MessageForm is_chat_group={this.props.is_chat_group} to={this.state.to}/>
 					</div>
 				</div>
             )

@@ -1,13 +1,19 @@
 var React = require('react');
+var actions = require('../actions');
+var stores = require('../stores');
+var owner = stores.getOwner();
+
+var ChatActions = actions.ChatActions;
 
 var MessageForm = React.createClass({
 	sendMessage: function(e){
 		e.preventDefault();
-		var message = React.findDOMNode(this.refs.message).value.trim();
+		var message = this.refs.message.value.trim();
 		if(!message){
 			return;
 		}
-		React.findDOMNode(this.refs.message).value = "";
+		ChatActions.sendMessage(message, owner, this.props.to, this.props.is_chat_group);
+		this.refs.message.value = "";
 		return;
 	},
 	

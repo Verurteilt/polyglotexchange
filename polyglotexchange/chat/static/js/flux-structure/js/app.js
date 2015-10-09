@@ -11,7 +11,8 @@ var div_user = $('#user_data');
 var owner_id = div_user.data('id');
 var username = div_user.html();
 ContainerActions.updateOwner(username);
-React.render(
+
+ReactDOM.render(
 	 <MainContainer owner_id={owner_id} username={username}/>,
 	    document.getElementById('main')
 );

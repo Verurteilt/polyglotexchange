@@ -5,7 +5,8 @@ var owner = require('../stores').getOwner();
 var ContainerActions = actions.ContainerActions;
 
 var createChat = function(_owner, to, group_name){
-	ContainerActions.addChat(_owner, to,<ChatBox to={to} to_username={group_name} is_chat_group={true}/>);
+	var key = _owner + '-' + to;
+	ContainerActions.addChat(_owner, to,<ChatBox key={key} to={to} to_username={group_name} is_chat_group={true}/>);
 }
 
 

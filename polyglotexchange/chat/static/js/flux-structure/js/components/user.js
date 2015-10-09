@@ -6,7 +6,8 @@ var ContainerActions = actions.ContainerActions;
 
 
 var createChat = function(_owner, to){
-	ContainerActions.addChat(_owner, to,<ChatBox to={to} to_username={to} />);
+	var key = _owner + '-' + to;
+	ContainerActions.addChat(_owner, to,<ChatBox key={key} to={to} to_username={to} />);
 }
 
 var User = React.createClass({
