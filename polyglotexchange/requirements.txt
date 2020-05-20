@@ -11,7 +11,7 @@ django-pagedown==0.1.0
 django-tracking2==0.2.5
 djangotoolbox==1.8.0
 enum34==1.0.4
-httplib2==0.9.1
+httplib2==0.18.0
 idna==2.0
 ipaddress==1.0.14
 ipython==4.0.0
